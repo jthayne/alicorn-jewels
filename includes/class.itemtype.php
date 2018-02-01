@@ -1,4 +1,5 @@
 <?php
+namespace Alicorn;
 
 /**
  * Class: ItemType
@@ -12,7 +13,7 @@ class ItemType
     /**
      * __construct
      *
-     * @param object $db
+     * @param object $db The database object
      */
     public function __construct($db)
     {
@@ -20,12 +21,12 @@ class ItemType
     }//end __construct()
 
     /**
-     * add
-     *
      * Adds a new item type to the database
      *
-     * @param string $name
-     * @param string $desc
+     * @param string $name The name of the item type
+     * @param string $desc The description of the item type (optional)
+     *
+     * @return null
      */
     public function add($name, $desc = '')
     {
@@ -33,16 +34,14 @@ class ItemType
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':name' => $name, ':desc' => $desc]);
-
-        return true;
     }//end add()
 
     /**
-     * remove
-     *
      * Disable a given item type
      *
-     * @param integer $id
+     * @param integer $id The ID to be marked as disabled
+     *
+     * @return null
      */
     public function remove($id)
     {
@@ -50,13 +49,9 @@ class ItemType
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':id' => $id]);
-
-        return true;
     }
 
     /**
-     * list
-     *
      * Returns an array containing the names and ids of enabled item types
      *
      * @return array
@@ -65,11 +60,16 @@ class ItemType
     {
         $results = [];
 
-        $sql = 'SELECT TypeName, ID FROM itemtype WHERE enabled = 1 ORDER BY TypeName ASC';
+        $sql = 'SELECT
+                TypeName,
+                ID
+            FROM itemtype
+            WHERE enabled = 1
+            ORDER BY TypeName ASC';
         foreach ($this->db->query($sql) as $row) {
             $temp = [
                 'id' => $row['ID'],
-                'name' => $row['TypeName'];
+                'name' => $row['TypeName'],
             ];
 
             $results[] = $temp;

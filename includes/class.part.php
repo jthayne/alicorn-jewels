@@ -18,7 +18,7 @@ class Part
      * @param string $brand    The brand of the part
      * @param string $source   Where the part was purchased
      */
-    public function add($name, $quantity, $cost, $brand)
+    public function add($name, $quantity, $cost, $brand, $source)
     {
         $costpp = $cost / $quantity;
 
@@ -29,6 +29,7 @@ class Part
             ':costpp' => $costpp,
             ':brand' => $brand,
             ':origqty' => $quantity,
+            ':source' => $source,
         ];
 
         $sql = 'INSERT INTO part (PartName, Quantity, CostPerPiece, Brand, Source)
@@ -108,6 +109,9 @@ class Part
                 $quantity -= $row['Quantity'];
             } else {
                 $this->_updateQuantity($row['id'], $row['Quantity'] - $quantity);
+
+                $quantity -= $row['Quantity'];
+                break;
             }
         }
 
