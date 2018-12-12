@@ -28,8 +28,6 @@ class Item
      * @param float  $price The price of the item
      * @param array  $parts An array of the part ids and quantities in the item
      * @param string $desc  A description of the item (optional)
-     *
-     * @return null
      */
     public function add(string $name, float $price, array $parts, string $desc = '')
     {
@@ -42,6 +40,7 @@ class Item
         // Get ID
         $id = $this->db->lastInsertId();
 
+        // TODO: Complete rest of function
         // Associate Parts
         // Determine Cost
         $sql = 'INSERT INTO partitem (PartID, ItemID, Quantity)

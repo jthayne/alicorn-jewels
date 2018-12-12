@@ -33,8 +33,6 @@ class PartType
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':name' => $name, ':desc' => $desc]);
-
-        return true;
     }//end add()
 
     /**
@@ -50,8 +48,6 @@ class PartType
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':id' => $id]);
-
-        return true;
     }
 
     /**
@@ -69,7 +65,7 @@ class PartType
         foreach ($this->db->query($sql) as $row) {
             $temp = [
                 'id' => $row['ID'],
-                'name' => $row['TypeName'];
+                'name' => $row['TypeName'],
             ];
 
             $results[] = $temp;
